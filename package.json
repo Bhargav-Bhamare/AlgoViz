@@ -1,0 +1,11 @@
+{
+  "engines": {
+    "node": "24.14.1"
+  },
+  "name": "daa-lab",
+  "version": "0.1.0",
+  "description": "Interactive Design & Analysis of Algorithms simulator",
+  "main": "app.js",
+  "scripts": { "start": "node app.js" },
+  "dependencies": { "ejs": "^3.1.10", "express": "^4.19.2" }
+}

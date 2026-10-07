@@ -1,0 +1,43 @@
+<%- include('partials/head', { title }) %>
+<main id="main" class="wrap">
+<header class="ah">
+  <p class="tech"><%= algo.categories.join(' · ') %></p>
+  <h1><%= algo.name %></h1>
+  <p><%= algo.tagline %></p>
+</header>
+<% if (!algo.available) { %><p class="panel">This simulator is not built yet.</p><% } else { %>
+<section class="panel" aria-label="Input">
+  <div class="row">
+    <span id="fields" class="row"></span>
+    <label id="preset-wrap">Preset<select id="preset"></select></label>
+    <span id="opts" class="row"></span>
+    <button id="btn-random" type="button">Randomize</button>
+    <button id="btn-gen" type="button" class="primary">Generate</button>
+  </div>
+  <p id="err" class="err" role="alert"></p>
+</section>
+<section class="panel viz" id="viz" aria-label="Visualization"></section>
+<p id="msg" class="msg" aria-live="polite"></p>
+<section class="panel controls" aria-label="Execution controls">
+  <button id="b-first" aria-label="Restart" title="Restart">⏮</button>
+  <button id="b-prev" aria-label="Previous step" title="Previous (←)">◀</button>
+  <button id="b-play" class="primary" aria-label="Play">▶ Play</button>
+  <button id="b-next" aria-label="Next step" title="Next (→)">▶|</button>
+  <label>Speed <select id="speed"><option>0.25</option><option>0.5</option><option selected>1</option><option>1.5</option><option>2</option><option>4</option></select>×</label>
+  <input id="timeline" type="range" min="0" max="0" value="0" aria-label="Execution timeline">
+</section>
+<div class="grid2">
+  <section class="panel"><h2>State</h2><dl id="stats" class="stats"></dl>
+    <div class="legend" aria-label="Legend"><span><i data-s="compare"></i>≟ comparing</span><span><i data-s="pivot"></i>★ pivot</span><span><i data-s="swap"></i>⇄ swapping</span><span><i data-s="active"></i>▸ writing / current</span><span><i data-s="sorted"></i>✓ final position</span></div></section>
+  <section class="panel"><h2>Pseudocode</h2><ol id="code" class="code"></ol></section>
+</div>
+<section class="panel"><h2>Info</h2>
+  <dl class="stats"><div><dt>Technique</dt><dd><%= algo.technique %></dd></div><div><dt>Time</dt><dd><%= algo.time %></dd></div><div><dt>Space</dt><dd><%= algo.space %></dd></div><div><dt>Stable?</dt><dd><%= algo.stable || '—' %></dd></div><div><dt>In-place?</dt><dd><%= algo.inPlace || '—' %></dd></div></dl></section>
+<script>window.ALGO = { slug: '<%= algo.slug %>' };</script>
+<script src="/js/player.js"></script>
+<script src="/js/visualizer.js"></script>
+<script src="/engines/<%= algo.engine %>"></script>
+<script src="/js/main.js"></script>
+<% } %>
+</main>
+<%- include('partials/foot') %>

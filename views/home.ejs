@@ -1,0 +1,34 @@
+<%- include('partials/head', { title }) %>
+<main id="main">
+<section class="hero">
+  <p class="prompt">$ run --algorithm <span id="typed">merge-sort</span></p>
+  <h1>SEE THE ALGORITHM.<br>DON'T JUST READ IT.</h1>
+  <p class="sub">An interactive laboratory for understanding algorithms through execution, visualization and experimentation.</p>
+  <div class="cta"><a class="btn primary" href="#explorer">Explore Algorithms</a><a class="btn" href="/random">Random Algorithm</a></div>
+</section>
+<section class="wrap" id="explorer">
+  <div class="chips" role="group" aria-label="Filter by category">
+    <% categories.forEach((c, i) => { %><button class="chip" aria-pressed="<%= i === 0 %>" data-cat="<%= c %>"><%= c %></button><% }) %>
+  </div>
+  <div class="cards">
+  <% algorithms.forEach(a => { %>
+    <article class="card" data-cats="<%= a.categories.join('|') %>">
+      <h2><%= a.name %></h2>
+      <p class="tech"><%= a.technique %> · <%= a.difficulty %></p>
+      <dl><div><dt>Time</dt><dd><%= a.time %></dd></div><div><dt>Space</dt><dd><%= a.space %></dd></div></dl>
+      <% if (a.available) { %><a class="btn primary" href="/algorithm/<%= a.slug %>">Visualize</a>
+      <% } else { %><span class="soon-tag">Coming in a later phase</span><% } %>
+    </article>
+  <% }) %>
+  </div>
+</section>
+</main>
+<script>
+document.querySelectorAll('.chip').forEach(ch => ch.addEventListener('click', () => {
+  document.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === ch));
+  document.querySelectorAll('.card').forEach(card => {
+    card.hidden = !(ch.dataset.cat === 'All' || card.dataset.cats.split('|').includes(ch.dataset.cat));
+  });
+}));
+</script>
+<%- include('partials/foot') %>
